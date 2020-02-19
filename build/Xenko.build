@@ -10,7 +10,7 @@ Example of use:
     <XenkoSolution>$(XenkoRoot)build\Xenko</XenkoSolution>
     <XenkoSolutionLauncher>$(XenkoRoot)build\Xenko.Launcher</XenkoSolutionLauncher>
     <XenkoPlatforms Condition="'$(XenkoPlatforms)' == ''">Windows</XenkoPlatforms>
-    <BuildProperties>Configuration=Release;NoWarn=1591;DeployExtension=false;XenkoPlatforms=$([MSBuild]::Escape('$(XenkoPlatforms)'));XenkoGraphicsApiDependentBuildAll=$(XenkoGraphicsApiDependentBuildAll)</BuildProperties>
+    <BuildProperties>Configuration=Debug;NoWarn=1591;DeployExtension=false;XenkoPlatforms=$([MSBuild]::Escape('$(XenkoPlatforms)'));XenkoGraphicsApiDependentBuildAll=$(XenkoGraphicsApiDependentBuildAll)</BuildProperties>
     <BuildProperties Condition="'$(XenkoSign)' != ''">$(BuildProperties);XenkoSign=$(XenkoSign)</BuildProperties>
     <BuildProperties Condition="'$(XenkoOfficialBuild)' != ''">$(BuildProperties);XenkoOfficialBuild=$(XenkoOfficialBuild)</BuildProperties>
     <NuGetPath>$(MSBuildThisFileDirectory).nuget\NuGet.exe</NuGetPath>
@@ -153,7 +153,7 @@ Example of use:
   
   <Target Name="BuildWindows" DependsOnTargets="CopyXenkoKey">
     <MSBuild Targets="Restore" Projects="$(MSBuildThisFileFullPath)" Properties="XenkoPlatforms=$(XenkoPlatforms);XenkoSolution=$(XenkoSolution);XenkoGraphicsApiDependentBuildAll=$(XenkoGraphicsApiDependentBuildAll)"/>
-    <MSBuild Targets="Build" Projects="$(XenkoSolution).sln" Properties="$(BuildProperties);XenkoSkipAutoPack=true;XenkoSkipUnitTests=true;XenkoGraphicsApiDependentBuildAll=$(XenkoGraphicsApiDependentBuildAll)"/>
+    <MSBuild Targets="Build" Projects="$(XenkoSolution).sln" Properties="$(BuildProperties);XenkoSkipAutoPack=false;XenkoSkipUnitTests=true;XenkoGraphicsApiDependentBuildAll=$(XenkoGraphicsApiDependentBuildAll)"/>
   </Target>
 
   <Target Name="BuildWindowsDirect3D11" DependsOnTargets="CopyXenkoKey">
@@ -168,7 +168,7 @@ Example of use:
 
   <Target Name="BuildWindowsOpenGL" DependsOnTargets="CopyXenkoKey">
     <MSBuild Targets="Restore" Projects="$(MSBuildThisFileFullPath)" Properties="XenkoPlatforms=$(XenkoPlatforms);XenkoSolution=$(XenkoSolution).Runtime;XenkoGraphicsApi=OpenGL"/>
-    <MSBuild Targets="Build" Projects="$(XenkoSolution).Runtime.sln" Properties="$(BuildProperties);XenkoGraphicsApi=OpenGL;XenkoSkipAutoPack=true;XenkoSkipUnitTests=true"/>
+    <MSBuild Targets="Build" Projects="$(XenkoSolution).Runtime.sln" Properties="$(BuildProperties);XenkoPlatforms=Windows;XenkoGraphicsApi=OpenGL;XenkoSkipAutoPack=false;XenkoSkipUnitTests=true"/>
   </Target>
 
   <Target Name="BuildWindowsOpenGLES" DependsOnTargets="CopyXenkoKey">
@@ -178,7 +178,7 @@ Example of use:
 
   <Target Name="BuildAndroid" DependsOnTargets="CopyXenkoKey">
     <Exec Command='"$(NuGetPath)" restore "$(XenkoSolution).Android.sln"' />
-    <MSBuild Targets="Build" Projects="$(XenkoSolution).Android.sln" Properties="$(BuildProperties);XenkoPlatforms=Android;XenkoSkipAutoPack=true;XenkoSkipUnitTests=true"/>
+    <MSBuild Targets="Build" Projects="$(XenkoSolution).Android.sln" Properties="$(BuildProperties);XenkoPlatforms=Android;XenkoSkipAutoPack=false;XenkoSkipUnitTests=true"/>
   </Target>
 
   <Target Name="BuildiOS" DependsOnTargets="CopyXenkoKey">

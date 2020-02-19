@@ -153,3 +153,7 @@ fastlane/report.xml
 fastlane/screenshots
 *.user
 project.lock.json
+.vscode/
+*.binlog
+*.metaproj
+*.metaproj.tmp
